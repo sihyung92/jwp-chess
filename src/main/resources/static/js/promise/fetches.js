@@ -1,6 +1,6 @@
 export {getFetch, getAcceptJsonFetch, putFetch, postFetch}
-const BASE_PORT = "8080";
-const BASE_URL = `http://localhost:${BASE_PORT}`;
+const BASE_PORT = "80";
+const BASE_URL = `http://3.34.188.32:${BASE_PORT}`;
 
 function getFetch(url) {
     return fetch(`${BASE_URL}${url}`).then(data => {
