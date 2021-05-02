@@ -12,21 +12,12 @@
         const $blackScore = document.querySelector('#blackScore')
         const $whiteScore = document.querySelector('#whiteScore')
 
-        let nextColor;
-        let chessGameId = 0;
+        let nextColor = '{{color}}';
+        let chessGameId = {{gameId}};
         const roomId = {{roomId}};
         $chessboard.addEventListener("click", onClickPiece);
 
-        getPieces("/game/{{{gameId}}}");
-
-        function onClickLoadBtn(e) {
-            if (e.target && e.target.id === "loadBtn") {
-                const loadGameId = prompt("로드할 게임 ID를 입력해주세요.");
-                if (loadGameId) {
-                    getPieces("/game/" + loadGameId);
-                }
-            }
-        }
+        getPieces();
 
         async function movePiece(from, to) {
             const moveResult = await putFetch("/game/move", {gameId: chessGameId, roomId: roomId, from: from, to: to});
@@ -113,24 +104,19 @@
             $whiteScore.innerText = scoreResponseData.colorsScore.WHITE;
         }
 
-        function setBoard(positionsAndPieces) {
-            $chessboard.querySelectorAll(".cell").forEach(e => {
-                e.innerText = ""
-                e.classList.remove("WHITE", "BLACK");
-            });
-            Object.keys(positionsAndPieces).forEach(e => {
-                const coordinate = $chessboard.querySelector('#' + e)
-                coordinate.textContent = pieceFonts[positionsAndPieces[e].notation]
-                coordinate.classList.add(positionsAndPieces[e].color);
-            });
+        function setBoard() {
+            let coordinate;
+           {{#positionsAndPieces}}
+               coordinate = $chessboard.querySelector('#{{position}}')
+               coordinate.textContent = pieceFonts['{{notation}}']
+               coordinate.classList.add('{{color}}');
+               console.log(coordinate);
+           {{/positionsAndPieces}}
         }
 
-        async function getPieces(url) {
-            const piecesData = await getAcceptJsonFetch(url, chessGameId);
-            chessGameId = piecesData.gameId;
+        async function getPieces() {
+            setBoard();
             await calculateScore();
-            setBoard(piecesData.piecesAndPositions);
-            nextColor = piecesData.color;
         }
     </script>
 </head>
