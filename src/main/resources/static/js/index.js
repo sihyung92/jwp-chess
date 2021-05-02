@@ -30,7 +30,6 @@ async function onClickGameRoom(e) {
         const password = prompt("비밀번호를 입력하라");
         isEmpty(password);
         const roomId = e.target.closest('.text').id;
-        console.log(roomId);
         await postFetch(`/room/${roomId}/password`, {roomId: roomId, password: password});
         location.href = `/room/${roomId}`;
     }
