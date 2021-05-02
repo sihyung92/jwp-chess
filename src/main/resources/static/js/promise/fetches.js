@@ -1,9 +1,7 @@
 export {getFetch, getAcceptJsonFetch, putFetch, postFetch}
-const BASE_PORT = "80";
-const BASE_URL = `http://3.36.176.254:${BASE_PORT}`;
 
 function getFetch(url) {
-    return fetch(`${BASE_URL}${url}`).then(data => {
+    return fetch(`.${url}`).then(data => {
         if (data.status === 400) {
             exceptionHandling(data.json());
         } else if (!data.ok) {
@@ -14,7 +12,7 @@ function getFetch(url) {
 }
 
 function getAcceptJsonFetch(url) {
-    return fetch(`${BASE_URL}${url}`, {
+    return fetch(`.${url}`, {
         method: "get",
         headers: {
             accept: "application/json"
@@ -30,7 +28,7 @@ function getAcceptJsonFetch(url) {
 }
 
 function postFetch(url, body = {}) {
-    return fetch(`${BASE_URL}${url}`, {
+    return fetch(`.${url}`, {
         method: "post",
         body: JSON.stringify(body),
         headers: {
@@ -46,7 +44,7 @@ function postFetch(url, body = {}) {
 }
 
 function putFetch(url, body = {}) {
-    return fetch(`${BASE_URL}${url}`, {
+    return fetch(`.${url}`, {
         method: "put",
         body: JSON.stringify(body),
         headers: {
